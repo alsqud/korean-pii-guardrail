@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-10-13",
+  "weights_bundled": false,
+  "trust_remote_code": false,
+  "format": "safetensors",
+  "models": {
+    "frame": {"model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818", "license": "MIT", "default_path": "~/.cache/korean-pii/models/frame", "path_env": "KOREAN_PII_MODEL_FRAME", "model_safetensors_sha256": "923ff800e1743c25abbbe9eda86a66ec23b5983754c1af66c09dbe3633e4d56b"},
+    "koredact": {"model_id": "infobank-corp/koredact-bert-base", "revision": "c8385f52505893cadd8a9adcc5958fce10ca3ead", "license": "CC-BY-SA-4.0", "default_path": "~/.cache/korean-pii/models/koredact", "path_env": "KOREAN_PII_MODEL_KOREDACT", "model_safetensors_sha256": "a92c69d9c9c6a51d6a20ecdbd8d42138cf89f1045fe86a34c183b96651a07e5e"},
+    "atonlee": {"model_id": "atonlee/koelectra-ko-pii-ner", "revision": "1e75c01e707232401883cf364151bbe2e560c708", "license": "Apache-2.0", "default_path": "~/.cache/korean-pii/models/atonlee", "path_env": "KOREAN_PII_MODEL_ATONLEE", "model_safetensors_sha256": "e3ed229e2bc4299c98624f0a5bfc9c15e2d9942295dc2eba8a67105e628e92dc"},
+    "seongyeon": {"model_id": "seongyeon1/ko-pii-ner-roberta-base", "revision": "95a3af685dccf4bb3f7fff6fc81146fed71500bb", "license": "CC-BY-SA-4.0", "default_path": "~/.cache/korean-pii/models/seongyeon", "path_env": "KOREAN_PII_MODEL_SEONGYEON", "model_safetensors_sha256": "ca27622d097f3101f00ddee725959bdb49a68303c76c58ae579461bb54a20f35"}
+  }
+}

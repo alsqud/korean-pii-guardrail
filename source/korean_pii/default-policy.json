@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "internal-0.2.2rc1-nhis-default-off",
+  "description": "Internal test policy: 13 types enabled by default; optional KR_NHIS supported but disabled; AGE excluded and PATIENT_ID unsupported",
+  "runtime": {
+    "device_env": "KOREAN_PII_DEVICE",
+    "device_default": "cuda",
+    "kiwi_site_packages_env": "KOREAN_PII_KIWI_SITE_PACKAGES",
+    "fail_closed": true,
+    "max_text_chars": 100000
+  },
+  "models": {
+    "frame": {
+      "model_id": "FrameByFrame/korean-pii-e5-base",
+      "path": "~/.cache/korean-pii/models/frame",
+      "path_env": "KOREAN_PII_MODEL_FRAME",
+      "revision": "a308c54b4407819624a5661e31e162a269f39818",
+      "license": "MIT",
+      "max_length": 256,
+      "stride": 64,
+      "role": "frontend"
+    },
+    "koredact": {
+      "model_id": "infobank-corp/koredact-bert-base",
+      "path": "~/.cache/korean-pii/models/koredact",
+      "path_env": "KOREAN_PII_MODEL_KOREDACT",
+      "revision": "c8385f52505893cadd8a9adcc5958fce10ca3ead",
+      "license": "CC-BY-SA-4.0",
+      "max_length": 512,
+      "stride": 128,
+      "role": "KR_LOCATION expert"
+    },
+    "atonlee": {
+      "model_id": "atonlee/koelectra-ko-pii-ner",
+      "path": "~/.cache/korean-pii/models/atonlee",
+      "path_env": "KOREAN_PII_MODEL_ATONLEE",
+      "revision": "1e75c01e707232401883cf364151bbe2e560c708",
+      "license": "Apache-2.0",
+      "max_length": 512,
+      "stride": 128,
+      "role": "KR_BANK_ACCOUNT and KR_PASSPORT expert"
+    },
+    "seongyeon": {
+      "model_id": "seongyeon1/ko-pii-ner-roberta-base",
+      "path": "~/.cache/korean-pii/models/seongyeon",
+      "path_env": "KOREAN_PII_MODEL_SEONGYEON",
+      "revision": "95a3af685dccf4bb3f7fff6fc81146fed71500bb",
+      "license": "CC-BY-SA-4.0",
+      "max_length": 256,
+      "stride": 64,
+      "role": "PERSON, KR_DRIVER_LICENSE, and KR_VEHICLE_PLATE expert"
+    }
+  },
+  "types": {
+    "PERSON": {
+      "enabled": true,
+      "candidate_detectors": ["frontend:PERSON", "frontend:USERNAME", "regex:role_prefix_name", "regex:honorific_name", "regex:mail_sender_name", "regex:speaker_name", "regex:numbered_name", "keyword:name_context"],
+      "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
+      "expert_model": "seongyeon",
+      "expert_threshold": {"enabled": true, "value": 0.95, "model": "seongyeon", "model_id": "seongyeon1/ko-pii-ner-roberta-base", "revision": "95a3af685dccf4bb3f7fff6fc81146fed71500bb"},
+      "context_chars": 24,
+      "allowed_output_labels": ["PERSON"],
+      "precise_bypass": null,
+      "threshold_evidence": {
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame PERSON/USERNAME candidate is routed; regex candidates have no model score.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "expert": {"status": "evaluated", "basis": "Frozen development setting for non-overlapping Seongyeon PERSON augmentation; raw scores are model-specific.", "evaluation_source": "Korean_PII_Router_v2_1_Validation_2026-10-13.md revision 4."}
+      }
+    },
+    "KR_LOCATION": {
+      "enabled": true,
+      "candidate_detectors": ["frontend:KR_LOCATION", "regex:kr_place_suffix", "regex:kr_detailed_address_shape", "keyword:address_context"],
+      "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
+      "expert_model": "koredact",
+      "expert_threshold": {"enabled": false, "value": null, "model": "koredact", "model_id": "infobank-corp/koredact-bert-base", "revision": "c8385f52505893cadd8a9adcc5958fce10ca3ead"},
+      "context_chars": 24,
+      "allowed_output_labels": ["KR_LOCATION"],
+      "precise_bypass": null,
+      "threshold_evidence": {
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame address candidate is routed; regex/keyword candidates have no model score.", "evaluation_source": "Same-window address experiment; no candidate-score sweep was run."},
+        "expert": {"status": "evaluated", "basis": "Explicitly disabled, not zero: card-native no-threshold F1 89.74 exceeded the development-selected 0.8326991 holdout F1 89.61.", "evaluation_source": "address_same_window_ab.json SHA-256 f808fcc951847e11d9627a62034de1423b8f34ce3bd0ca8282999980fcc46e68."}
+      }
+    },
+    "KR_BANK_ACCOUNT": {
+      "enabled": true,
+      "candidate_detectors": ["frontend:KR_BANK_ACCOUNT", "regex:account_shape", "keyword:account_context"],
+      "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
+      "expert_model": "atonlee",
+      "expert_threshold": {"enabled": true, "value": 0.5, "model": "atonlee", "model_id": "atonlee/koelectra-ko-pii-ner", "revision": "1e75c01e707232401883cf364151bbe2e560c708"},
+      "context_chars": 24,
+      "allowed_output_labels": ["KR_BANK_ACCOUNT"],
+      "precise_bypass": null,
+      "threshold_evidence": {
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame bank candidate is routed; rules have no model score.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "expert": {"status": "evaluated", "basis": "Frozen Atonlee development threshold; not a calibrated or cross-model probability.", "evaluation_source": "Korean_PII_Router_v2_1_Validation_2026-10-13.md revision 4."}
+      }
+    },
+    "KR_PASSPORT": {
+      "enabled": true,
+      "candidate_detectors": ["frontend:KR_PASSPORT", "regex:passport_shape", "keyword:passport_context"],
+      "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
+      "expert_model": "atonlee",
+      "expert_threshold": {"enabled": true, "value": 0.9, "model": "atonlee", "model_id": "atonlee/koelectra-ko-pii-ner", "revision": "1e75c01e707232401883cf364151bbe2e560c708"},
+      "context_chars": 24,
+      "allowed_output_labels": ["KR_PASSPORT"],
+      "precise_bypass": null,
+      "threshold_evidence": {
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame passport candidate is routed; rules have no model score.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "expert": {"status": "evaluated", "basis": "Frozen Atonlee development threshold; not a calibrated or cross-model probability.", "evaluation_source": "Korean_PII_Router_v2_1_Validation_2026-10-13.md revision 4."}
+      }
+    },
+    "KR_DRIVER_LICENSE": {
+      "enabled": true,
+      "candidate_detectors": ["frontend:KR_DRIVER_LICENSE", "regex:kr_driver_license", "keyword:driver_context"],
+      "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
+      "expert_model": "seongyeon",
+      "expert_threshold": {"enabled": false, "value": null, "model": "seongyeon", "model_id": "seongyeon1/ko-pii-ner-roberta-base", "revision": "95a3af685dccf4bb3f7fff6fc81146fed71500bb"},
+      "context_chars": 24,
+      "allowed_output_labels": ["KR_DRIVER_LICENSE"],
+      "precise_bypass": "regex:kr_driver_license",
+      "threshold_evidence": {
+        "candidate": {"status": "not_tuned", "basis": "Disabled: all Frame/rule candidates are routed.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "expert": {"status": "not_tuned", "basis": "Explicitly disabled, not zero; precise-format bypass remains separate.", "evaluation_source": "Router v2.1 validation; no specialist threshold sweep was run."}
+      }
+    },
+    "KR_VEHICLE_PLATE": {
+      "enabled": true,
+      "candidate_detectors": ["frontend:KR_VEHICLE_PLATE", "regex:kr_vehicle_plate", "keyword:vehicle_context"],
+      "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
+      "expert_model": "seongyeon",
+      "expert_threshold": {"enabled": false, "value": null, "model": "seongyeon", "model_id": "seongyeon1/ko-pii-ner-roberta-base", "revision": "95a3af685dccf4bb3f7fff6fc81146fed71500bb"},
+      "context_chars": 24,
+      "allowed_output_labels": ["KR_VEHICLE_PLATE"],
+      "precise_bypass": null,
+      "threshold_evidence": {
+        "candidate": {"status": "not_tuned", "basis": "Disabled: all Frame/rule candidates are routed.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "expert": {"status": "not_tuned", "basis": "Explicitly disabled, not zero.", "evaluation_source": "Router v2.1 validation; no specialist threshold sweep was run."}
+      }
+    },
+    "CREDIT_CARD": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct Frame output; no router candidate threshold.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "DATE_OF_BIRTH": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct Frame output; no router candidate threshold.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "USERNAME": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct Frame output; no router candidate threshold.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "EMAIL_ADDRESS": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct ko-pii output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "IP_ADDRESS": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct ko-pii output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "KR_PHONE_NUMBER": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct ko-pii output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "KR_RRN": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct Presidio output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
+    "KR_NHIS": {"enabled": false, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_tuned", "basis": "Optional type disabled by default; when enabled, direct 11-digit candidates require explicit insurance field linkage.", "evaluation_source": "Internal v4 precision validation; no production prevalence claim."}, "expert": {"status": "not_applicable", "basis": "Optional frozen candidate verifier is loaded only when KR_NHIS is enabled and a linked candidate exists.", "evaluation_source": "Internal v4 configuration validation."}}}
+  },
+  "direct": {
+    "frame_labels": ["CREDIT_CARD", "DATE_OF_BIRTH", "USERNAME"],
+    "ko_pii_labels": ["EMAIL_ADDRESS", "IP_ADDRESS", "KR_PHONE_NUMBER"],
+    "presidio_labels": ["KR_RRN"],
+    "enable_nhis_shape": true
+  },
+  "mask": {
+    "token_format": "<{label}>",
+    "overlap_priority": ["KR_RRN", "KR_NHIS", "CREDIT_CARD", "KR_BANK_ACCOUNT", "KR_PASSPORT", "KR_DRIVER_LICENSE", "KR_VEHICLE_PLATE", "EMAIL_ADDRESS", "KR_PHONE_NUMBER", "IP_ADDRESS", "DATE_OF_BIRTH", "PERSON", "KR_LOCATION", "USERNAME"]
+  },
+  "unsupported": ["AGE", "PATIENT_ID"]
+}
