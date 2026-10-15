@@ -1,0 +1,40 @@
+{
+  "schema_version": "long-document-test-set-validation-1",
+  "status": "PASS",
+  "fixture_sha256": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+  "address_sha256": "5024e7fc60d0c81509506361a6f63cb6dc3f3cea0ae9a1d3cf59650b462f8713",
+  "address_evidence_sha256": "c07e1aef326c8fb01be701b80889e9eb2ef3cb495e92c0e8351b8b9c2db58782",
+  "documents": 12,
+  "numeric_or_punctuated_roads": 1,
+  "gold_counts": {
+    "CREDIT_CARD": 12,
+    "DATE_OF_BIRTH": 12,
+    "EMAIL_ADDRESS": 12,
+    "IP_ADDRESS": 12,
+    "KR_BANK_ACCOUNT": 12,
+    "KR_DRIVER_LICENSE": 12,
+    "KR_LOCATION": 12,
+    "KR_PASSPORT": 12,
+    "KR_PHONE_NUMBER": 12,
+    "KR_RRN": 12,
+    "KR_VEHICLE_PLATE": 12,
+    "PERSON": 12,
+    "USERNAME": 12
+  },
+  "decoy_counts": {
+    "ADDRESS_FOLLOWUP_GENERAL": 12,
+    "ADMINISTRATIVE_ONLY_LOCATION": 12,
+    "CROSS_LINE_BANK_DRIVER_TRAP": 12,
+    "DOCUMENT_TITLE_NON_PERSON": 12,
+    "INVALID_LUHN_CARD": 12,
+    "NON_ACCOUNT_REFERENCE": 12,
+    "NON_BIRTH_DATE": 12,
+    "NON_PASSPORT_PART": 12,
+    "NON_PHONE_PART": 12,
+    "NON_RRN_REFERENCE": 12,
+    "NON_USERNAME_SLUG": 12,
+    "NON_VEHICLE_ZONE": 12,
+    "SOFTWARE_VERSION": 12
+  },
+  "failures": []
+}

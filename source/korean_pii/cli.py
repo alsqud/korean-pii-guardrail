@@ -4,7 +4,7 @@ import json
 import sys
 
 from .errors import DetectionError
-from .pipeline import KoreanPII
+from .hybrid_pipeline import KoreanPII
 
 
 def main() -> None:

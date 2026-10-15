@@ -1,0 +1,93 @@
+{
+  "schema_version": "historical-regression-summary-1",
+  "datasets": [
+    {
+      "name": "address_generalization",
+      "gold": 78,
+      "full": 78,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    },
+    {
+      "name": "independent_mixed_generalization",
+      "gold": 156,
+      "full": 156,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    },
+    {
+      "name": "bank_account_generalization",
+      "gold": 156,
+      "full": 156,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    },
+    {
+      "name": "long_input_overlap_stress",
+      "gold": 156,
+      "full": 156,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    },
+    {
+      "name": "long_input_precision_regression",
+      "gold": 156,
+      "full": 156,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    },
+    {
+      "name": "unseen_address_recovery",
+      "gold": 156,
+      "full": 156,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    },
+    {
+      "name": "address_field_vocabulary",
+      "gold": 156,
+      "full": 156,
+      "partial": 0,
+      "miss": 0,
+      "general_information_false_positives": 0,
+      "raw_overlap_pairs": 1,
+      "selected_exact_fp": 0,
+      "selected_exact_fn": 0,
+      "selected_overlap_pairs": 0
+    }
+  ],
+  "totals": {
+    "gold": 1014,
+    "full": 1014,
+    "partial": 0,
+    "miss": 0,
+    "general_information_false_positives": 0,
+    "selected_exact_fp": 0,
+    "selected_exact_fn": 0,
+    "selected_overlap_pairs": 0
+  }
+}

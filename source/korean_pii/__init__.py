@@ -4,7 +4,7 @@ import os
 import threading
 
 from .errors import ConfigError, DetectionError, ModelLoadError, PIIError
-from .pipeline import KoreanPII
+from .hybrid_pipeline import KoreanPII
 from .types import Span
 
 

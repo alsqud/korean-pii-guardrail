@@ -3,8 +3,8 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "korean-pii-guardrail"
-version = "0.2.2rc1"
-description = "Korean PII detection and masking with NER models and rules"
+version = "0.3.0rc1"
+description = "Hybrid Korean PII detection and masking for product integration"
 requires-python = ">=3.10"
 dependencies = [
   "torch==2.11.0",
@@ -15,6 +15,11 @@ dependencies = [
   "presidio-analyzer==2.2.364",
   "kiwipiepy==0.24.0",
 ]
+[project.scripts]
+korean-pii = "korean_pii.cli:main"
+korean-pii-build-address-index = "korean_pii.address_index_builder:main"
+korean-pii-health = "korean_pii.health:main"
+korean-pii-model-check = "korean_pii.model_check:main"
 [tool.setuptools.packages.find]
 where = ["source"]
 [tool.setuptools.package-data]

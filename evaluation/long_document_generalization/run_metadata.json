@@ -1,0 +1,99 @@
+{
+  "schema_version": "hybrid-pipeline-run-metadata-1",
+  "mode": "hybrid_pipeline",
+  "fixture_sha256": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+  "documents": 12,
+  "load_seconds_excluded": 2.250767136923969,
+  "warmup_seconds_excluded": 0.47935120994225144,
+  "warm_e2e_scope": "tokenization + all model chunks + inference + routing + postprocess + raw serialization + overlap selection + actual deterministic masking",
+  "cuda_synchronize_before_after": true,
+  "batch_size": 1,
+  "device": "cuda",
+  "gpu": "NVIDIA L4",
+  "latency_ms": {
+    "mean": 503.39225000000005,
+    "p50": 489.20799999999997,
+    "p95_nearest_rank": 666.532
+  },
+  "throughput": {
+    "documents_per_second": 1.9865224385158886,
+    "characters_per_second": 4608.235426747233
+  },
+  "runtime": {
+    "pipeline_profile": "hybrid-long-document-guardrails",
+    "policy_version": "experimental-0.2.3rc10-fix13-structured-address-person-nhis-off",
+    "policy_sha256": "91d3f03b9b05b3bf7b5d0a062d258ee8e164010b04d8ef7b91b514cc75112a4c",
+    "loaded_models": [
+      "atonlee",
+      "frame",
+      "koredact",
+      "seongyeon"
+    ],
+    "address_gazetteer": {
+      "configured": true,
+      "loaded": true,
+      "index_sha256": "6e64b1b1f2e1a5bce2498f18d60823fd44551191bc4f36c4467696900cd370f3",
+      "administrative_name_count": 3289,
+      "legal_name_count": 11048,
+      "road_name_count": 143606,
+      "road_combination_count": 196404,
+      "source_counts": {
+        "active_administrative_rows": 3925,
+        "active_legal_rows": 20570,
+        "active_mapping_rows": 21837,
+        "active_road_rows": 372063,
+        "administrative_rows": 3925,
+        "legal_rows": 20570,
+        "mapping_rows": 21837,
+        "road_rows": 372063
+      }
+    },
+    "account_policy": {
+      "requires_model_overlap": true,
+      "catalog_mismatch_is_not_rejection": true,
+      "cross_line_institution_borrowing": false,
+      "catalog": {
+        "source_title": "참가기관별 CMS 계좌번호체계",
+        "source_as_of": "2026-05-08",
+        "source_url": "https://www.cmsedi.or.kr/cms/board/workdata/view/1031",
+        "institutions": 55,
+        "by_kind": {
+          "bank": 16,
+          "broker": 24,
+          "cooperative": 5,
+          "foreign_bank": 5,
+          "internet_bank": 3,
+          "postal": 1,
+          "savings_bank": 1
+        },
+        "pages_covered": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "institution_binding": "same physical line as candidate; radius <= 72",
+        "cross_line_institution_borrowing": false
+      }
+    },
+    "raw_prediction_definition": "postprocessed exact-deduplicated spans before overlap selection",
+    "selected_prediction_definition": "actual non-overlapping spans used for masking",
+    "masked_text_saved": true
+  },
+  "failures": 0
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "sealed-long-document-test-set-1",
+  "seed": "long-document-generalization-20261015-r5",
+  "sealed_before_model_output": true,
+  "truth_and_criteria_changes_after_seal_forbidden": true,
+  "fixture_sha256": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+  "validation_status": "PASS",
+  "original_internal_seal_sha256": "4e6df6db58611226be12e051fe96d383e9c9bd77f8ea71180f508ad4d9e87eab",
+  "sealed_input_hashes": {
+    "evaluation_protocol": "720607e342811d56fa8fdda5249c53c2444c2cfef4ceff05d7e6e96f6273bb6f",
+    "address_selector": "42e462f87929bbcd21fa0aee9b98cf4a4f49e2f00d2b62f6d1c85f5ea0c49af6",
+    "test_set_generator": "c2796d969beb42e2963846cdbcc2a490bfad08a631c61d028500912b7d0ec8ea",
+    "test_set_validator": "23f14de2bde1dec1c512eb6f0bd8bb9cba41c4a4ffcfcd3dcdc431b72ba5c1cf",
+    "inference_runner": "57e2f96136087322217b26503518d2e4dc95a2578de22770d90ab5669fc53ec2",
+    "seal_writer": "4e8ecdf46022e9727eedc27b727f455cb95b29e210177d122774ee710a953d93",
+    "verified_addresses": "5024e7fc60d0c81509506361a6f63cb6dc3f3cea0ae9a1d3cf59650b462f8713",
+    "verified_address_evidence": "c07e1aef326c8fb01be701b80889e9eb2ef3cb495e92c0e8351b8b9c2db58782",
+    "long_document_test_set": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+    "test_set_validation": "85bf7a319beead38b4c9dd1ff7671858eb988ee99c437cda214ccf168fdcba0f"
+  },
+  "evaluated_code_hashes": {
+    "precision_policy": "a3f7ee27498488e29ce2e7e3571a04ba23eb6d420610a3813066791686079d9d",
+    "bank_account_fields": "ac631a6e43502da771d67bedf4309bec1a3ab4009e1d219bbd7e10508eb6683b",
+    "bank_account_linking": "a601bfbc4c866f5c0e94e66a3dc07a9f0ef88acbd4409b2093e0fb9a2121692a",
+    "bank_account_catalog": "f08f9e5d03482a4004fc250cee6652eb4c233c5a46f111263203a9c66c460d4d",
+    "bank_account_evidence": "55ee3ab3210440b00488c00aff98fe4caeb584096912ba8b4c93acf72978b812",
+    "address_boundaries": "13212d6be0937320029c11a5def70070ae141f676129c3a469b487c9863b2dac",
+    "inference_runner": "5b862c8f1aead7a779dd6dce48418992ef646a40b55857259965bdcc61bd2682",
+    "evaluator": "6f41933cd4c1ad8cbf2dc86eb083d6e9b1c1e4d95c89f17ac25cd9e4a7f4fabf",
+    "base_source_tree": "2c4db2a4201a8d436e1ad7df1ef4037f1c7bda30d281d1a43b7968e220416f5c"
+  },
+  "preexisting_model_outputs": []
+}
