@@ -1,0 +1,347 @@
+{
+  "schema_version": "long-document-overlap-evaluation-1",
+  "fixture_sha256": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+  "run_sha256": "be5f4f1387e1b6b1020fb74f783d7017a1cbf1f9bc89d2a0aad4f795dcf2d032",
+  "definitions": {
+    "primary": "actual selected/masked full-partial-miss plus decoy/general false positives",
+    "raw_overlap": "any intersecting pair after candidate postprocess and exact dedup, before final overlap selection",
+    "selected_overlap": "any intersecting pair in the actual masking stream; must be zero"
+  },
+  "summary": {
+    "documents": 12,
+    "input_chars": 27837,
+    "gold": 156,
+    "full": 156,
+    "partial": 0,
+    "miss": 0,
+    "decoys": 156,
+    "decoy_hits": 0,
+    "decoy_masked_chars": 0,
+    "overmask_chars_outside_gold": 0,
+    "all_full_documents": 12,
+    "raw_items": 156,
+    "selected_items": 156,
+    "raw_exact_duplicate_items": 0,
+    "selected_exact_duplicate_items": 0,
+    "raw_overlap_pairs": 0,
+    "raw_cross_label_overlap_pairs": 0,
+    "selected_overlap_pairs": 0,
+    "selected_nonoverlap": true,
+    "raw_type_boundary_exact": {
+      "tp": 156,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "selected_type_boundary_exact": {
+      "tp": 156,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "mask_projection_failures": [],
+    "offset_failures": [],
+    "runtime_failures": 0,
+    "latency_ms": {
+      "mean": 503.39225000000005,
+      "p50": 489.20799999999997,
+      "p95_nearest_rank": 666.532
+    },
+    "throughput": {
+      "documents_per_second": 1.9865224385158886,
+      "characters_per_second": 4608.235426747233
+    }
+  },
+  "per_type": {
+    "PERSON": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_LOCATION": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_BANK_ACCOUNT": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "DATE_OF_BIRTH": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "USERNAME": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_PASSPORT": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_DRIVER_LICENSE": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_VEHICLE_PLATE": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "CREDIT_CARD": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "EMAIL_ADDRESS": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "IP_ADDRESS": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_PHONE_NUMBER": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "KR_RRN": {
+      "gold": 12,
+      "full": 12,
+      "partial": 0,
+      "miss": 0,
+      "raw_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "selected_exact": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  }
+}

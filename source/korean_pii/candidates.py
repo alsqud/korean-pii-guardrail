@@ -11,7 +11,10 @@ DRIVER_LICENSE_PATTERN = re.compile(
     r"(?<![A-Za-z0-9-])\d{2}[- ]\d{2}[- ]\d{6}[- ]\d{2}(?![A-Za-z0-9-])"
 )
 VEHICLE_PLATE_PATTERN = re.compile(
-    r"(?<![가-힣A-Za-z0-9-])(?:[가-힣]{2}\s*)?\d{2,3}[가-힣]\s*\d{4}(?![A-Za-z0-9-])"
+    r"(?<![가-힣A-Za-z0-9-])"
+    r"(?:(?:서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|"
+    r"전북|전남|경북|경남|제주)\s*)?"
+    r"\d{2,3}[가-힣]\s*\d{4}(?![A-Za-z0-9-])"
 )
 KOREAN_POSTPOSITION_PATTERN = (
     r"(?:으로|에서|에게|까지|부터|은|는|이|가|을|를|의|와|과|로|에|도|만)"
@@ -33,6 +36,10 @@ PATTERNS = {
     "keyword:vehicle_context": re.compile(r"차량|차번호|번호판"),
     "regex:role_prefix_name": re.compile(r"(?:엔지니어|강사|요원|운전자|담당자|고객|신청인|소유자|원고|피고)\s*[가-힣]{2,6}"),
     "regex:honorific_name": re.compile(r"(?<![가-힣])[가-힣]{2,5}(?=\s*(?:은|는|이|가|을|를|의|님|씨|께|입니다|이며|에게))"),
+    "regex:responsibility_name": re.compile(
+        r"(?:(?<=책임자는 )|(?<=책임자는)|(?<=책임자 ))"
+        r"[가-힣]{2,5}(?=\s*(?:이며|이고|이다|입니다|이었|으로))"
+    ),
     "regex:mail_sender_name": re.compile(r"보낸\s*사람:\s*[가-힣]{2,5}"),
     "regex:speaker_name": re.compile(r"(?m)^[가-힣]{2,5}(?=:)") ,
     "regex:numbered_name": re.compile(r"(?m)^\s*\d+\.\s*[가-힣]{2,5}(?=\s*\()"),

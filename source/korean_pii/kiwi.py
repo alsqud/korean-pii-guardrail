@@ -24,10 +24,36 @@ _PERSON_ROLE_NOUNS = frozenset({
     "담당자", "신청인", "고객", "직원", "기사", "운전자", "소유자", "대표",
     "팀장", "부장", "과장", "매니저", "원고", "피고",
 })
+_PERSON_TRAILING_PARTICLES = frozenset({
+    "은", "는", "이", "가", "을", "를", "의", "와", "과", "에게", "께", "도", "만",
+})
+_QUOTATIVE_SELF_INTRO = re.compile(
+    r"^(?:이?라고)[ \t]*(?:합니다|해요|했습니다|소개(?:합니다|했습니다)|말(?:합니다|했습니다))"
+)
 _PERSON_LEFT_CUE = re.compile(
     r"(?:담당자|신청인|고객|환자|직원|기사|운전자|소유자|대표|팀장|부장|"
     r"과장|매니저|원고|피고|성명|이름)[ 	]*$"
 )
+_PERSON_CONTEXT_CUE = re.compile(
+    r"(?:담당자|신청인|고객|환자|직원|기사|운전자|소유자|대표|팀장|부장|"
+    r"과장|매니저|원고|피고|성명|이름)"
+)
+_NON_PERSON_NAME_FIELD_CUE = re.compile(
+    r"(?:제품[ \t]*명|제품[ \t]*이름|프로그램[ \t]*(?:명|이름|제목)|"
+    r"작품[ \t]*(?:명|제목)|행사[ \t]*프로그램[ \t]*(?:명|이름|제목)|"
+    r"상표|브랜드[ \t]*(?:명|이름))"
+    r"[ \t]*(?:은|는|이|가)?[ \t]*$"
+)
+_EXPLICIT_NON_PERSON_RIGHT_CUE = re.compile(
+    r"^(?:은|는|이|가|을|를|이며|이고|이다|입니다)?[ \t,]*"
+    r"(?:(?![.!?\n]).){0,32}"
+    r"(?:사람[ \t]*이름이[ \t]*아니라|개인을?[ \t]*지칭하지[ \t]*않는|"
+    r"담당[ \t]*인명이[ \t]*아니다|사람[ \t]*이름으로[ \t]*쓰인[ \t]*것이[ \t]*아니다|"
+    r"소유자[ \t]*성명이[ \t]*아니다|개인[ \t]*이름이[ \t]*아니다)"
+)
+_DOCUMENT_META_NOUNS = frozenset({
+    "문서", "자료", "주석", "본문", "기록", "서류", "메모", "표", "항목",
+})
 _GIM_FOOD_PREDICATE = re.compile(
     r"^(?:은|는|이|가|을|를)[ 	]*"
     r"(?:(?:도시락|식사|음식|요리|김밥)[ 	]*)?"
@@ -130,6 +156,39 @@ def _is_non_person_homonym(text: str, start: int, end: int) -> bool:
     return _GIM_FOOD_PREDICATE.search(right) is not None
 
 
+def _is_document_meta_noun(text: str, tokens, start: int, end: int) -> bool:
+    """Reject a small semantic class of document nouns mislabeled as people.
+
+    The surface must be a known document-structure noun, Kiwi must analyze the
+    exact range entirely as common nouns, and no nearby person identity cue may
+    be present.  This avoids a global confidence or PERSON threshold change.
+    """
+
+    if text[start:end] not in _DOCUMENT_META_NOUNS:
+        return False
+    context = text[max(0, start - 32):min(len(text), end + 32)]
+    if _PERSON_CONTEXT_CUE.search(context):
+        return False
+    selected = sorted(
+        (token for token in tokens if start <= token.start and token.start + token.len <= end),
+        key=lambda token: token.start,
+    )
+    if not selected or selected[0].start != start:
+        return False
+    cursor = start
+    for token in selected:
+        if token.start != cursor or token.tag != "NNG":
+            return False
+        cursor = token.start + token.len
+    return cursor == end
+
+
+def _has_explicit_non_person_right_cue(text: str, end: int) -> bool:
+    """Honor an explicit local statement that the candidate is not a person."""
+
+    return _EXPLICIT_NON_PERSON_RIGHT_CUE.search(text[end:min(len(text), end + 72)]) is not None
+
+
 class KiwiBoundaryNormalizer:
     def __init__(self, policy: Policy):
         self.policy = policy
@@ -170,7 +229,7 @@ class KiwiBoundaryNormalizer:
                 if not trailing:
                     break
                 token = trailing[-1]
-                particle = token.tag.startswith("J")
+                particle = token.tag.startswith("J") and token.form in _PERSON_TRAILING_PARTICLES
                 honorific = token.form in {"님", "씨"} and token.tag in {"XSN", "NNB", "NNG"}
                 if not (particle or honorific) or token.start - span.start < 2:
                     break
@@ -187,7 +246,23 @@ class KiwiBoundaryNormalizer:
             # name, clean token boundaries, and Kiwi proper-noun analysis.
             left_hangul = start > 0 and _is_hangul(text[start - 1])
             right_hangul = end < len(text) and _is_hangul(text[end])
-            right_is_boundary = not right_hangul or _has_person_boundary_token(tokens, end)
+            quotative_boundary = _QUOTATIVE_SELF_INTRO.search(text[end:min(len(text), end + 24)]) is not None
+            right_is_boundary = not right_hangul or _has_person_boundary_token(tokens, end) or quotative_boundary
+            # Some synthetic or user-entered Korean attaches a nominative
+            # particle that Kiwi does not split (for example, a 받침-ending
+            # name followed by "가"). Preserve only a complete 2--4 syllable,
+            # high-confidence Frame span with an explicit nearby person cue.
+            context = text[max(0, start - 32):min(len(text), end + 32)]
+            conservative_particle_fallback = (
+                right_hangul
+                and text[end:end + 1] in _PERSON_TRAILING_PARTICLES
+                and 2 <= end - start <= 4
+                and span.score >= 0.99
+                and _PERSON_CONTEXT_CUE.search(context) is not None
+            )
+            if conservative_particle_fallback:
+                right_is_boundary = True
+                changes.append("explicit person cue plus particle fallback")
             if left_hangul:
                 candidate_start = start - 1
                 bounded_left = candidate_start == 0 or not _is_hangul(text[candidate_start - 1])
@@ -205,7 +280,13 @@ class KiwiBoundaryNormalizer:
             elif not right_is_boundary:
                 continue
 
-            if _has_non_person_derivational_tail(tokens, start, end):
+            explicit_identity_boundary = (
+                2 <= end - start <= 4
+                and span.score >= 0.99
+                and _PERSON_CONTEXT_CUE.search(context) is not None
+                and _has_person_boundary_token(tokens, end)
+            )
+            if _has_non_person_derivational_tail(tokens, start, end) and not explicit_identity_boundary:
                 continue
 
             if changes:
@@ -233,6 +314,11 @@ class KiwiBoundaryNormalizer:
                 and (
                     _is_metalinguistic_object_name(text, tokens, span.start, span.end)
                     or _is_non_person_homonym(text, span.start, span.end)
+                    or _is_document_meta_noun(text, tokens, span.start, span.end)
+                    or _has_explicit_non_person_right_cue(text, span.end)
+                    or _NON_PERSON_NAME_FIELD_CUE.search(
+                        text[max(0, span.start - 48):span.start]
+                    ) is not None
                 )
             )
         ]

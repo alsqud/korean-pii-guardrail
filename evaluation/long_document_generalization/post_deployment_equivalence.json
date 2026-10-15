@@ -1,0 +1,9 @@
+{
+  "schema_version": "post-deployment-equivalence-1",
+  "status": "PASS",
+  "documents": 12,
+  "fixture_sha256": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+  "expected_sha256": "be5f4f1387e1b6b1020fb74f783d7017a1cbf1f9bc89d2a0aad4f795dcf2d032",
+  "pipeline_profile": "hybrid-long-document-guardrails",
+  "mismatches": []
+}

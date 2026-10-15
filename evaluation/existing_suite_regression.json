@@ -1,0 +1,54 @@
+{
+  "policy_version": "experimental-0.2.3rc10-fix13-structured-address-person-nhis-off",
+  "policy_sha256": "91d3f03b9b05b3bf7b5d0a062d258ee8e164010b04d8ef7b91b514cc75112a4c",
+  "supported_type_count": 14,
+  "enabled_type_count": 13,
+  "nhis_enabled": false,
+  "nhis_verifier_loaded": false,
+  "document_count": 4,
+  "check_count": 115,
+  "all_checks_passed": true,
+  "all_nhis_absent": true,
+  "documents": [
+    {
+      "id": "manual-full-680",
+      "chars": 680,
+      "sha256": "27f159959c6b242fb83043ef38e47537799e9097cb950323b4793a4e34841589",
+      "check_count": 30,
+      "all_checks_passed": true,
+      "failed_checks": [],
+      "nhis_span_count": 0,
+      "masked_sha256": "8c00d57ac91670d71afb518979bdbbd2d64d7328229ce85187ab054abd659516"
+    },
+    {
+      "id": "manual-reordered-680",
+      "chars": 680,
+      "sha256": "e7e09c450f4db6c1b518f6189458be30dade7edf711698ccf04d1e94772d164b",
+      "check_count": 30,
+      "all_checks_passed": true,
+      "failed_checks": [],
+      "nhis_span_count": 0,
+      "masked_sha256": "15ecc967f5c915ae08f4d929264ac4762e1a8a3b9eba0da6a9c8b8487fc57ed8"
+    },
+    {
+      "id": "exact-original-669",
+      "chars": 669,
+      "sha256": "8f9c54cb9532d93d90b59c122ff7cdc682d7ca93b24a54aa726ccea531534143",
+      "check_count": 29,
+      "all_checks_passed": true,
+      "failed_checks": [],
+      "nhis_span_count": 0,
+      "masked_sha256": "3398ac4b0d1cc77aeb0910f493d0b190d51b114016a5c827e9e5dbcc88f5441c"
+    },
+    {
+      "id": "natural-diverse-long",
+      "chars": 898,
+      "sha256": "0102ebeee3d703c9abf660281075c317b79d52d153358ec6ec30a3dc86a4979e",
+      "check_count": 26,
+      "all_checks_passed": true,
+      "failed_checks": [],
+      "nhis_span_count": 0,
+      "masked_sha256": "e5811e064d9cf63424d725851fde536987fc0f2edb4db00ad00041bb09a7f4c3"
+    }
+  ]
+}

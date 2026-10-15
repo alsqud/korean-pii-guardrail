@@ -1,0 +1,2 @@
+documents,gold,full,partial,miss,decoys,decoy_hits,overmask_chars,raw_duplicate_items,raw_overlap_pairs,raw_cross_label_overlap_pairs,selected_overlap_pairs,selected_tp,selected_fp,selected_fn,mean_ms,p50_ms,p95_ms,runtime_failures
+12,156,156,0,0,156,0,0,0,0,0,0,156,0,0,503.39225000000005,489.20799999999997,666.532,0

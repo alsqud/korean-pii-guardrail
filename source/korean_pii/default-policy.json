@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "policy_version": "internal-0.2.2rc1-nhis-default-off",
-  "description": "Internal test policy: 13 types enabled by default; optional KR_NHIS supported but disabled; AGE excluded and PATIENT_ID unsupported",
+  "policy_version": "hybrid-long-document-guardrails-2026-10-15",
+  "description": "Product integration policy: 13 types enabled; optional KR_NHIS disabled; AGE and PATIENT_ID unsupported",
   "runtime": {
     "device_env": "KOREAN_PII_DEVICE",
     "device_default": "cuda",
@@ -54,7 +54,7 @@
   "types": {
     "PERSON": {
       "enabled": true,
-      "candidate_detectors": ["frontend:PERSON", "frontend:USERNAME", "regex:role_prefix_name", "regex:honorific_name", "regex:mail_sender_name", "regex:speaker_name", "regex:numbered_name", "keyword:name_context"],
+      "candidate_detectors": ["frontend:PERSON", "frontend:USERNAME", "regex:role_prefix_name", "regex:honorific_name", "regex:responsibility_name", "regex:mail_sender_name", "regex:speaker_name", "regex:numbered_name", "keyword:name_context"],
       "candidate_threshold": {"enabled": false, "value": null, "model": "frame", "model_id": "FrameByFrame/korean-pii-e5-base", "revision": "a308c54b4407819624a5661e31e162a269f39818"},
       "expert_model": "seongyeon",
       "expert_threshold": {"enabled": true, "value": 0.95, "model": "seongyeon", "model_id": "seongyeon1/ko-pii-ner-roberta-base", "revision": "95a3af685dccf4bb3f7fff6fc81146fed71500bb"},
@@ -62,8 +62,8 @@
       "allowed_output_labels": ["PERSON"],
       "precise_bypass": null,
       "threshold_evidence": {
-        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame PERSON/USERNAME candidate is routed; regex candidates have no model score.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
-        "expert": {"status": "evaluated", "basis": "Frozen development setting for non-overlapping Seongyeon PERSON augmentation; raw scores are model-specific.", "evaluation_source": "Korean_PII_Router_v2_1_Validation_2026-10-13.md revision 4."}
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame PERSON/USERNAME candidate is routed; regex candidates have no model score.", "evaluation_source": "Candidate-routing validation; no candidate-score sweep was run."},
+        "expert": {"status": "not_tuned", "basis": "Global threshold remains 0.95 and exact honorific consensus remains 0.92. A 0.90 floor applies only to exact responsibility-name/model-boundary consensus.", "evaluation_source": "Development candidate comparison on 2026-10-14."}
       }
     },
     "KR_LOCATION": {
@@ -90,7 +90,7 @@
       "allowed_output_labels": ["KR_BANK_ACCOUNT"],
       "precise_bypass": null,
       "threshold_evidence": {
-        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame bank candidate is routed; rules have no model score.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame bank candidate is routed; rules have no model score.", "evaluation_source": "Candidate-routing validation; no candidate-score sweep was run."},
         "expert": {"status": "evaluated", "basis": "Frozen Atonlee development threshold; not a calibrated or cross-model probability.", "evaluation_source": "Korean_PII_Router_v2_1_Validation_2026-10-13.md revision 4."}
       }
     },
@@ -104,7 +104,7 @@
       "allowed_output_labels": ["KR_PASSPORT"],
       "precise_bypass": null,
       "threshold_evidence": {
-        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame passport candidate is routed; rules have no model score.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
+        "candidate": {"status": "not_tuned", "basis": "Disabled: every Frame passport candidate is routed; rules have no model score.", "evaluation_source": "Candidate-routing validation; no candidate-score sweep was run."},
         "expert": {"status": "evaluated", "basis": "Frozen Atonlee development threshold; not a calibrated or cross-model probability.", "evaluation_source": "Korean_PII_Router_v2_1_Validation_2026-10-13.md revision 4."}
       }
     },
@@ -118,8 +118,8 @@
       "allowed_output_labels": ["KR_DRIVER_LICENSE"],
       "precise_bypass": "regex:kr_driver_license",
       "threshold_evidence": {
-        "candidate": {"status": "not_tuned", "basis": "Disabled: all Frame/rule candidates are routed.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
-        "expert": {"status": "not_tuned", "basis": "Explicitly disabled, not zero; precise-format bypass remains separate.", "evaluation_source": "Router v2.1 validation; no specialist threshold sweep was run."}
+        "candidate": {"status": "not_tuned", "basis": "Disabled: all Frame/rule candidates are routed.", "evaluation_source": "Candidate-routing validation; no candidate-score sweep was run."},
+        "expert": {"status": "not_tuned", "basis": "Explicitly disabled, not zero; precise-format bypass remains separate.", "evaluation_source": "Candidate-routing validation; no specialist threshold sweep was run."}
       }
     },
     "KR_VEHICLE_PLATE": {
@@ -132,8 +132,8 @@
       "allowed_output_labels": ["KR_VEHICLE_PLATE"],
       "precise_bypass": null,
       "threshold_evidence": {
-        "candidate": {"status": "not_tuned", "basis": "Disabled: all Frame/rule candidates are routed.", "evaluation_source": "Router v2.1 validation; no candidate-score sweep was run."},
-        "expert": {"status": "not_tuned", "basis": "Explicitly disabled, not zero.", "evaluation_source": "Router v2.1 validation; no specialist threshold sweep was run."}
+        "candidate": {"status": "not_tuned", "basis": "Disabled: all Frame/rule candidates are routed.", "evaluation_source": "Candidate-routing validation; no candidate-score sweep was run."},
+        "expert": {"status": "not_tuned", "basis": "Explicitly disabled, not zero.", "evaluation_source": "Candidate-routing validation; no specialist threshold sweep was run."}
       }
     },
     "CREDIT_CARD": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct Frame output; no router candidate threshold.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
@@ -143,7 +143,7 @@
     "IP_ADDRESS": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct ko-pii output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
     "KR_PHONE_NUMBER": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct ko-pii output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
     "KR_RRN": {"enabled": true, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_applicable", "basis": "Direct Presidio output.", "evaluation_source": "Internal policy 0.2.0."}, "expert": {"status": "not_applicable", "basis": "No specialist model.", "evaluation_source": "Internal policy 0.2.0."}}},
-    "KR_NHIS": {"enabled": false, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_tuned", "basis": "Optional type disabled by default; when enabled, direct 11-digit candidates require explicit insurance field linkage.", "evaluation_source": "Internal v4 precision validation; no production prevalence claim."}, "expert": {"status": "not_applicable", "basis": "Optional frozen candidate verifier is loaded only when KR_NHIS is enabled and a linked candidate exists.", "evaluation_source": "Internal v4 configuration validation."}}}
+    "KR_NHIS": {"enabled": false, "candidate_detectors": [], "candidate_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "expert_model": null, "expert_threshold": {"enabled": false, "value": null, "model": null, "model_id": null, "revision": null}, "context_chars": 0, "allowed_output_labels": [], "precise_bypass": null, "threshold_evidence": {"candidate": {"status": "not_tuned", "basis": "Optional type disabled by default; when enabled, direct 11-digit candidates require explicit insurance field linkage.", "evaluation_source": "Default-disabled precision validation; no production prevalence claim."}, "expert": {"status": "not_applicable", "basis": "Optional frozen candidate verifier is loaded only when KR_NHIS is enabled and a linked candidate exists.", "evaluation_source": "Default-disabled configuration validation."}}}
   },
   "direct": {
     "frame_labels": ["CREDIT_CARD", "DATE_OF_BIRTH", "USERNAME"],

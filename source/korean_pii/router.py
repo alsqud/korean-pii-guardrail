@@ -14,7 +14,34 @@ def accept(span: Span, window: RoutedWindow, policy: Policy) -> bool:
         return False
     threshold = route.expert_threshold
     if threshold.enabled and (span.score is None or span.score < threshold.value):
-        return False
+        # A particle-bounded Korean name can be an exact candidate focus even
+        # when Frame emitted no PERSON span. Keep the frozen global threshold,
+        # and use a lower floor only when the deterministic candidate and
+        # Seongyeon agree on the exact same boundary.
+        exact_particle_name_consensus = (
+            span.label == "PERSON"
+            and span.score is not None
+            and span.score >= 0.92
+            and span.start == window.focus_start
+            and span.end == window.focus_end
+            and any(
+                evidence == "label:PERSON:regex:honorific_name"
+                for evidence in window.evidence
+            )
+        )
+        exact_responsibility_name_consensus = (
+            span.label == "PERSON"
+            and span.score is not None
+            and span.score >= 0.90
+            and span.start == window.focus_start
+            and span.end == window.focus_end
+            and any(
+                evidence == "label:PERSON:regex:responsibility_name"
+                for evidence in window.evidence
+            )
+        )
+        if not (exact_particle_name_consensus or exact_responsibility_name_consensus):
+            return False
     return True
 
 

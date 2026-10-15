@@ -1,0 +1,33 @@
+{
+  "schema_version": "product-integration-release-1",
+  "package": "korean-pii-guardrail",
+  "package_version": "0.3.0rc1",
+  "pipeline_profile": "hybrid-long-document-guardrails",
+  "policy_version": "hybrid-long-document-guardrails-2026-10-15",
+  "policy_sha256": "a34cd7154c542862ea461540323f7247aa1ca80875df49b50be7c1e70c83f5cc",
+  "wheel": {
+    "filename": "korean_pii_guardrail-0.3.0rc1-py3-none-any.whl",
+    "sha256": "b13aaa1117a6465656fd34568653a87d850402c874f7a2d336f41492e3a50e40"
+  },
+  "sealed_evaluation": {
+    "documents": 12,
+    "input_characters": 27837,
+    "gold_items": 156,
+    "fully_protected": 156,
+    "partial": 0,
+    "miss": 0,
+    "general_information_false_positives": 0,
+    "selected_overlap_pairs": 0,
+    "fixture_sha256": "0f78fffdf3e5f2a43f2f8e70d2ffc76e44e1b2125631a661b789dc75d7b10ef2",
+    "expected_predictions_sha256": "be5f4f1387e1b6b1020fb74f783d7017a1cbf1f9bc89d2a0aad4f795dcf2d032"
+  },
+  "verification": {
+    "wheel_installed_in_isolated_target": true,
+    "readiness_status": "ready",
+    "raw_selected_masked_equivalence": "PASS",
+    "historical_regression_gold": 1014,
+    "existing_suite_checks": 115
+  },
+  "bundled_weights": false,
+  "bundled_address_index": false
+}
