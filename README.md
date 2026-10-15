@@ -35,6 +35,16 @@
 
 내부 실험 번호 대신 각 파일의 역할을 이름에 사용합니다.
 
+## 전체 아키텍처와 유형별 탐지 방식
+
+입력은 네 개 NER 모델과 직접 규칙 탐지를 거친 뒤, 공통 라벨 매핑, 유형별 문맥·형식 검증, 공식 주소·계좌 근거 확인, 경계·겹침 후처리를 통과합니다. 최종 `detect()` 결과만 `mask()`가 유형 토큰으로 치환합니다. 모델 또는 규칙 처리에 실패하면 원문을 통과시키지 않고 `DetectionError`를 발생시킵니다.
+
+코드의 `candidate`는 별도 NER 모델이 아니라 검토 전 후보 span·문맥 창을 뜻합니다. 모델 가중치는 외부 네 모델의 고정 revision을 사용하고, 이 저장소가 제공하는 핵심 결과물은 모델 역할 분담과 규칙·공식 근거·후처리를 결합한 하이브리드 파이프라인입니다.
+
+지원하는 13개 유형 각각에 대해 어떤 모델·규칙을 사용하고 어떤 오탐 방지 조건을 적용하는지는 다음 문서에 코드 기준으로 설명했습니다.
+
+- [`docs/architecture_and_detection_guide_ko.md`](docs/architecture_and_detection_guide_ko.md)
+
 ## 설치
 
 Python 3.10 이상이 필요합니다. 검증 환경은 Python 3.10과 NVIDIA L4 CUDA입니다.
@@ -134,6 +144,7 @@ PYTHONPATH=source python evaluation/verify_packaged_output.py \
 상세 내용은 다음 문서를 참고하십시오.
 
 - `docs/hybrid_pipeline_release_report_ko.md`
+- `docs/architecture_and_detection_guide_ko.md`
 - `docs/deployment_guide_ko.md`
 - `docs/product_integration_guide_ko.md`
 - `evaluation/long_document_generalization/README.md`

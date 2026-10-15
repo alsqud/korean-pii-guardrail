@@ -10,11 +10,11 @@
 
 ## 설치
 
-Git 저장소에서 직접 설치:
+공개 Git 저장소에서 직접 설치:
 
 ```bash
 python -m pip install \
-  "git+ssh://git@github.com/alsqud/korean-pii-guardrail.git@main"
+  "git+https://github.com/alsqud/korean-pii-guardrail.git@main"
 ```
 
 wheel을 전달받은 경우:
@@ -150,3 +150,5 @@ PYTHONPATH=source python evaluation/verify_packaged_output.py \
 6. 문제가 있으면 직전 wheel과 정책·주소 인덱스 조합으로 되돌린다.
 
 wheel, Git 커밋, 모델 revision·해시, 정책 해시, 주소 인덱스 해시를 하나의 배포 기록으로 묶어야 재현 가능한 롤백이 가능하다.
+
+전체 처리 흐름과 13개 유형별 탐지 근거는 `docs/architecture_and_detection_guide_ko.md`를 확인한다.

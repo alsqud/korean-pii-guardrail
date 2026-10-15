@@ -15,7 +15,7 @@ weights/
 *.pth
 .zip
 .env
-.env.
+.env.*
 !.env.example
 env.sh
 *.pem
