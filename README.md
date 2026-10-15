@@ -64,6 +64,13 @@ export KOREAN_PII_ADDRESS_INDEX=/path/to/official_address_index.sqlite
 python -m korean_pii.model_check --verify-hashes
 ```
 
+저장소에서 고정된 모델 revision을 준비할 때는 먼저 다운로드 계획을 확인한 뒤 명시적으로 실행합니다.
+
+```bash
+python tools/download_model_weights.py
+python tools/download_model_weights.py --download
+```
+
 공식 주소 원본 ZIP으로 런타임 인덱스를 만드는 명령도 wheel에 포함됩니다.
 
 ```bash

@@ -10,11 +10,11 @@
 
 ## 설치
 
-Git 브랜치에서 직접 설치:
+Git 저장소에서 직접 설치:
 
 ```bash
 python -m pip install \
-  "git+https://github.com/alsqud/korean-pii-guardrail.git@feat/hybrid-pii-long-document-guardrails"
+  "git+ssh://git@github.com/alsqud/korean-pii-guardrail.git@main"
 ```
 
 wheel을 전달받은 경우:
@@ -52,6 +52,13 @@ korean-pii-model-check --verify-hashes
 ```
 
 명령 결과가 `status: ok`가 아니면 프로세스를 시작하지 않는다.
+
+저장소에서 고정된 revision을 내려받아야 한다면 먼저 계획을 확인하고 명시적으로 실행한다.
+
+```bash
+python tools/download_model_weights.py
+python tools/download_model_weights.py --download
+```
 
 ## 공식 주소 인덱스 준비
 
