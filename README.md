@@ -101,6 +101,11 @@ print(masked_text)
 
 `detect()`는 라벨과 문자 위치를 반환하고 `mask()`는 탐지 영역을 유형별 토큰으로 바꿉니다. 동일 프로세스에서는 모델 인스턴스를 재사용합니다.
 
+Gemini API와 연결해 직접 시험할 수 있는 로컬 웹 예제도 제공합니다. 원문은
+Python 서버에서 먼저 마스킹하며, 마스킹된 결과만 Gemini로 보냅니다.
+
+- [`examples/simple_gemini_web/README.md`](examples/simple_gemini_web/README.md)
+
 ## 설정
 
 `source/korean_pii/default-policy.json`을 별도 파일로 복사한 뒤 `KOREAN_PII_CONFIG`로 지정할 수 있습니다.
