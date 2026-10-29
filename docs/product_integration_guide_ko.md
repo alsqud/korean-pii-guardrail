@@ -20,7 +20,7 @@ python -m pip install \
 wheel을 전달받은 경우:
 
 ```bash
-python -m pip install korean_pii_guardrail-0.3.0rc1-py3-none-any.whl
+python -m pip install korean_pii_guardrail-0.3.0rc2-py3-none-any.whl
 ```
 
 배포 wheel의 SHA-256은 다음과 같다.
