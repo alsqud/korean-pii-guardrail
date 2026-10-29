@@ -3,11 +3,11 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "korean-pii-guardrail"
-version = "0.3.0rc1"
+version = "0.3.0rc2"
 description = "Hybrid Korean PII detection and masking for product integration"
 requires-python = ">=3.10"
 dependencies = [
-  "torch==2.11.0",
+  "torch>=2.13.0,<2.14",
   "transformers==5.17.0",
   "safetensors==0.8.0",
   "numpy==2.2.6",
