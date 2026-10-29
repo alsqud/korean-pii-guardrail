@@ -90,7 +90,7 @@ def main() -> None:
     assert existing["all_nhis_absent"] is True
 
     manifest = load(ROOT.parent.parent / "release_manifest.json")
-    assert manifest["package_version"] == "0.3.0rc1"
+    assert manifest["package_version"] == "0.3.0rc2"
     assert manifest["policy_sha256"] == packaged["policy_sha256"]
     assert manifest["sealed_evaluation"]["fixture_sha256"] == sha256(fixture)
     assert manifest["sealed_evaluation"]["expected_predictions_sha256"] == sha256(predictions)
